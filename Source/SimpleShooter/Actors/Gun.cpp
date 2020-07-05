@@ -41,11 +41,22 @@ void AGun::Shoot()
 
 	const FVector End = OwnerLocation + OwnerRotation.Vector() * ShotRange;
 	FHitResult Hit;
-	GetWorld()->LineTraceSingleByChannel(Hit, OwnerLocation, End, ECC_GameTraceChannel1);
-
-	if (Hit.GetComponent())
+	bool bHitSuccess = GetWorld()->LineTraceSingleByChannel(Hit, OwnerLocation, End, ECC_GameTraceChannel1);
+	if (bHitSuccess)
 	{
+		FVector ShotDirection = -OwnerRotation.Vector();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticles, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+		FPointDamageEvent DamageEvent = FPointDamageEvent(
+			Damage,
+			Hit,
+			ShotDirection,
+			nullptr
+		);
+		AActor* ActorHit = Hit.GetActor();
+		if (ActorHit != nullptr)
+		{
+			ActorHit->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
 	}
 }
 

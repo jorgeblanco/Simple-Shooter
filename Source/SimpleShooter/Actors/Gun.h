@@ -33,4 +33,6 @@ private:
 	UParticleSystem* ImpactParticles;
 	UPROPERTY(EditAnywhere)
 	float ShotRange = 10000.f;
+	UPROPERTY(EditAnywhere)
+	float Damage = 50.f;
 };
