@@ -3,6 +3,8 @@
 
 #include "Shooter.h"
 
+#include "SimpleShooter/Actors/Gun.h"
+
 // Sets default values
 AShooter::AShooter()
 {
@@ -15,7 +17,15 @@ AShooter::AShooter()
 void AShooter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	Gun->AttachToComponent(
+		GetMesh(),
+		FAttachmentTransformRules::KeepRelativeTransform,
+		TEXT("WeaponSocket")
+	);
+	Gun->SetOwner(this);
 }
 
 // Called every frame
@@ -35,6 +45,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AShooter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &AShooter::LookRight);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AShooter::Shoot);
 }
 
 void AShooter::MoveForward(float AxisValue)
@@ -55,4 +66,9 @@ void AShooter::LookUp(float AxisValue)
 void AShooter::LookRight(float AxisValue)
 {
 	AddControllerYawInput(AxisValue);
+}
+
+void AShooter::Shoot()
+{
+	Gun->Shoot();
 }
