@@ -4,6 +4,7 @@
 #include "Shooter.h"
 
 #include "SimpleShooter/Actors/Gun.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -59,6 +60,12 @@ float AShooter::TakeDamage(
 {
 	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	Health = FMath::Clamp(Health - DamageApplied, 0.f, MaxHealth);
+
+	if (IsDead())
+	{
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 	
 	return DamageApplied;
 }
