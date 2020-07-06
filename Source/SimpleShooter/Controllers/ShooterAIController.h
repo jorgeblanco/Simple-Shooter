@@ -16,6 +16,8 @@ class SIMPLESHOOTER_API AShooterAIController : public AAIController
 
 private:
 	APawn* PlayerPawn = nullptr;
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree* AIBehavior;
 	
 public:
 	virtual void Tick(float DeltaTime) override;

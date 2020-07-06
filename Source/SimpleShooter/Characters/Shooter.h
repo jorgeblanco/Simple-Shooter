@@ -29,6 +29,7 @@ public:
 		class AController* EventInstigator,
 		AActor* DamageCauser
 	) override;
+	void Shoot();
 
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
@@ -42,7 +43,6 @@ private:
 	void MoveRight(float AxisValue);
 	void LookUp(float AxisValue);
 	void LookRight(float AxisValue);
-	void Shoot();
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass;
