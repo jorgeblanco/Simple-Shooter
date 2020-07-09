@@ -35,4 +35,7 @@ private:
 	float ShotRange = 10000.f;
 	UPROPERTY(EditAnywhere)
 	float Damage = 50.f;
+	
+	bool GunTrace(FHitResult& Hit, FVector& ShotDirection) const;
+	AController* GetOwnerController() const;
 };
