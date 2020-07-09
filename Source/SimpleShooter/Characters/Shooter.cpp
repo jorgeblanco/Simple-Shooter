@@ -5,6 +5,7 @@
 
 #include "SimpleShooter/Actors/Gun.h"
 #include "Components/CapsuleComponent.h"
+#include "SimpleShooter/SimpleShooterGameModeBase.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -63,6 +64,12 @@ float AShooter::TakeDamage(
 
 	if (IsDead())
 	{
+		ASimpleShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ASimpleShooterGameModeBase>();
+		if (GameMode != nullptr)
+		{
+			GameMode->PawnKilled(this);
+		}
+		
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
