@@ -5,10 +5,17 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "SimpleShooter/Characters/Shooter.h"
 
 void AShooterAIController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+}
+
+bool AShooterAIController::IsDead() const
+{
+    AShooter* ThisPawn = Cast<AShooter>(GetPawn());
+    return !ThisPawn || ThisPawn->IsDead();
 }
 
 void AShooterAIController::BeginPlay()
@@ -24,13 +31,6 @@ void AShooterAIController::BeginPlay()
     }
     
     RunBehaviorTree(AIBehavior);
-    if (PlayerPawn != nullptr)
-    {
-        GetBlackboardComponent()->SetValueAsVector(
-            TEXT("PlayerLocation"),
-            PlayerPawn->GetActorLocation()
-        );
-    }
 
     if (ThisPawn != nullptr)
     {

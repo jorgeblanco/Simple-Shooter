@@ -12,6 +12,11 @@ void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner
     if (bIsWinner)
     {
         UE_LOG(LogTemp, Warning, TEXT("Game has ended. You won!!!"))
+        UUserWidget* WinScreen = CreateWidget(this, WinScreenClass);
+        if (WinScreen != nullptr)
+        {
+            WinScreen->AddToViewport();
+        }
     }
     else
     {

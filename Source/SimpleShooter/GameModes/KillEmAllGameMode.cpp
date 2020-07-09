@@ -2,8 +2,10 @@
 
 
 #include "KillEmAllGameMode.h"
+
 #include "EngineUtils.h"
 #include "GameFramework/Controller.h"
+#include "SimpleShooter/Controllers/ShooterAIController.h"
 
 void AKillEmAllGameMode::EndGame(bool bPlayerWin)
 {
@@ -25,4 +27,14 @@ void AKillEmAllGameMode::PawnKilled(APawn* PawnKilled)
     {
         EndGame(false);
     }
+    
+    for (AShooterAIController* Controller : TActorRange<AShooterAIController>(GetWorld()))
+    {
+        if (!Controller->IsDead())
+        {
+           return; 
+        }
+    }
+
+    EndGame(true);
 }
