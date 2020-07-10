@@ -61,6 +61,7 @@ bool AGun::GunTrace(FHitResult& Hit, FVector& ShotDirection) const
 void AGun::Shoot()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleParticles, Mesh, TEXT("MuzzleFlashSocket"));
+	UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
 	FHitResult Hit;
 	FVector ShotDirection;
 	bool bHitSuccess = GunTrace(
@@ -70,6 +71,7 @@ void AGun::Shoot()
 	if (bHitSuccess)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticles, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
 		FPointDamageEvent DamageEvent = FPointDamageEvent(
 			Damage,
 			Hit,

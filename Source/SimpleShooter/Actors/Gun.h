@@ -32,6 +32,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* ImpactParticles;
 	UPROPERTY(EditAnywhere)
+	USoundBase* MuzzleSound;
+	UPROPERTY(EditAnywhere)
+	USoundBase* ImpactSound;
+	UPROPERTY(EditAnywhere)
 	float ShotRange = 10000.f;
 	UPROPERTY(EditAnywhere)
 	float Damage = 50.f;
