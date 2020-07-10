@@ -82,6 +82,15 @@ bool AShooter::IsDead() const
 	return Health <= 0.f;
 }
 
+float AShooter::GetHealthPercent() const
+{
+	if (MaxHealth == 0)
+	{
+		return 0.f;
+	}
+	return Health/MaxHealth;
+}
+
 void AShooter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);

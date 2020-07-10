@@ -20,8 +20,15 @@ private:
 	TSubclassOf<UUserWidget> WinScreenClass;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> LoseScreenClass;
+	UPROPERTY(EditAnywhere)
+    TSubclassOf<UUserWidget> HUDClass;
+
+	UUserWidget* HUD;
 	FTimerHandle RestartTimer;
 
 public:
 	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
+	
+protected:
+	virtual void BeginPlay() override;
 };
